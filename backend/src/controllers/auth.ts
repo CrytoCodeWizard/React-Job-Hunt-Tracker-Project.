@@ -5,6 +5,7 @@ import { IUser } from "../models/interfaces/User";
 import { User } from "../models/User";
 
 import { createJWT, passwordCheck } from "../utilities/auth";
+import { CustomError } from "../utilities/errors";
 
 export const register = async (req: Request, res: Response) => {
   const newUser = await User.create(req.body);
@@ -19,13 +20,22 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const { email, password }: IUser = req.body;
-  if (!email || !password) throw new Error("Password and Email are required!");
+  if (!email || !password)
+    throw new CustomError(
+      "Password and Email are required!",
+      StatusCodes.UNAUTHORIZED
+    );
 
   const user = await User.findOne({ email });
-  if (!user) throw new Error(`User with email: ${email} does not exist!`);
+
+  if (!user)
+    throw new CustomError(
+      `User with email: ${email} does not exist!`,
+      StatusCodes.NOT_FOUND
+    );
 
   if (!(await passwordCheck(password, user.password)))
-    throw new Error(`Incorrect Password!`);
+    throw new CustomError(`Incorrect Password!`, StatusCodes.UNAUTHORIZED);
 
   const token = createJWT({ userId: user.id, userName: user.name });
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
