@@ -4,9 +4,9 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node ./dist/main.js",
-    "dev": "nodemon -e ts --watch src .env --exec \"tsc --incremental && node dist/main.js\""
+    "build": "rimraf ./dist && tsc",
+    "start": "cross-env NODE_ENV=production node ./dist/main.js",
+    "dev": "nodemon -e ts --watch src .env --exec \"tsc --incremental && node ./dist/main.js\""
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,9 @@
     "helmet": "^6.0.0",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.2"
+    "mongoose": "^6.7.2",
+    "rimraf": "^3.0.2",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -28,8 +30,10 @@
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.9",
+    "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
