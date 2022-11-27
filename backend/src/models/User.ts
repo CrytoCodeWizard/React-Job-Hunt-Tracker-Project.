@@ -14,7 +14,7 @@ const userSchema = new Schema<IUser>({
 
   email: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, "Email is required!"],
     trim: true,
     match: [validEmailRegex, "Please enter a valid email address!"],
     unique: true,
@@ -23,7 +23,7 @@ const userSchema = new Schema<IUser>({
   password: {
     type: String,
     required: [true, "Password is required!"],
-    minlength: 6,
+    minlength: [6, "Password must have more than 5 characters!"],
   },
 });
 
