@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../utilities/errors";
 
 export const errorHandlerMiddleware = async (
@@ -7,7 +8,7 @@ export const errorHandlerMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(error.statusCode).json({
+  res.status(error.statusCode ?? StatusCodes.INTERNAL_SERVER_ERROR).json({
     message: error.message,
   });
   next(error);
