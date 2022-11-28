@@ -29,7 +29,7 @@ const AuthInfo = ({ method }: AuthInfoProps) => {
       </Heading>
       <HStack spacing="1" justify={["left", "center"]}>
         <Text color="muted">
-          {method === "Log in" ? `Don't have an account?` : `Already an user?`}
+          {method === "Log in" ? `Don't have an account?` : `Already a user?`}
         </Text>
 
         <Button as={Link} to={to} variant="link" colorScheme="blue">
