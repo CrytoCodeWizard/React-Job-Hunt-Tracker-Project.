@@ -10,5 +10,6 @@ export interface UserRegister extends UserLogin {
 export interface UserRegisterResponse extends UserLogin {
   user: { name: string };
   token: string;
+  method: string;
 }
 export type UserLoginResponse = UserRegisterResponse;

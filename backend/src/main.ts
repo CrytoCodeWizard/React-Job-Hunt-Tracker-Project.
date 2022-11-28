@@ -40,6 +40,11 @@ const run = async () => {
     app.use("/api/v1/auth", authRouter);
     app.use("/api/v1/jobs", authMiddleware, jobsRouter);
 
+    app.use("/api/v1/verify", authMiddleware);
+    app.get("/api/v1/verify", (req, res) => {
+      res.json({ ok: "ok" });
+    });
+
     app.use(errorHandlerMiddleware);
     app.use(notFoundMiddleware);
 

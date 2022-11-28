@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { CustomRequest } from "../interfaces/CustomRequest";
 
 import { IUser } from "../models/interfaces/User";
 import { User } from "../models/User";
@@ -15,7 +16,9 @@ export const register = async (req: Request, res: Response) => {
     userName: newUser.name,
   });
 
-  res.status(StatusCodes.CREATED).json({ user: { name: newUser.name }, token });
+  res
+    .status(StatusCodes.CREATED)
+    .json({ method: "register", user: { name: newUser.name }, token });
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -37,6 +40,12 @@ export const login = async (req: Request, res: Response) => {
   if (!(await passwordCheck(password, user.password)))
     throw new CustomError(`Incorrect Password!`, StatusCodes.UNAUTHORIZED);
 
-  const token = createJWT({ userId: user.id, userName: user.name });
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  const token = createJWT({
+    userId: user.id,
+    userName: user.name,
+  });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ method: "login", user: { name: user.name }, token });
 };
