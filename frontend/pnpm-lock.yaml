@@ -19,6 +19,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.31.11
   framer-motion: ^7.6.12
+  immer: ^9.0.16
   prettier: ^2.8.0
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -35,12 +36,13 @@ dependencies:
   '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
   axios: 1.2.0
   framer-motion: 7.6.12_biqbaboplfbrettd7655fr4n2y
+  immer: 9.0.16
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.6.0_react@18.2.0
   react-router-dom: 6.4.3_biqbaboplfbrettd7655fr4n2y
   web-vitals: 2.1.4
-  zustand: 4.1.4_react@18.2.0
+  zustand: 4.1.4_immer@9.0.16+react@18.2.0
 
 devDependencies:
   '@testing-library/jest-dom': 5.16.5
@@ -6853,7 +6855,6 @@ packages:
 
   /immer/9.0.16:
     resolution: {integrity: sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==}
-    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -11578,7 +11579,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand/4.1.4_react@18.2.0:
+  /zustand/4.1.4_immer@9.0.16+react@18.2.0:
     resolution: {integrity: sha512-k2jVOlWo8p4R83mQ+/uyB8ILPO2PCJOf+QVjcL+1PbMCk1w5OoPYpAIxy9zd93FSfmJqoH6lGdwzzjwqJIRU5A==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -11590,6 +11591,7 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 9.0.16
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
