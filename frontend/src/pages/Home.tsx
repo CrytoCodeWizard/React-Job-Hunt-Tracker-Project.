@@ -16,7 +16,7 @@ import JobList from "../components/Job/JobList";
 import useAppStore from "../store/store";
 
 import { FaArrowDown } from "react-icons/fa";
-import { JobStatus } from "../components/Job/interfaces/job";
+import { JobStatus } from "../components/Job/interfaces/jobs";
 import useCustomToast from "../hooks/useCustomToast";
 import { toTitle, transformErrorMessage } from "../utilities/transform-text";
 import FullScreenSpinner from "../components/FullScreenSpinner";
