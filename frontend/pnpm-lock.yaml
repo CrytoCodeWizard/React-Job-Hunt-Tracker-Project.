@@ -4,6 +4,8 @@ specifiers:
   '@chakra-ui/react': ^2.4.1
   '@emotion/react': ^11.10.5
   '@emotion/styled': ^11.10.5
+  '@fontsource/open-sans': ^4.5.13
+  '@fontsource/raleway': ^4.5.11
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^13.5.0
@@ -34,6 +36,8 @@ dependencies:
   '@chakra-ui/react': 2.4.1_hkukxbqflua6lnjhisenr4vbym
   '@emotion/react': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
   '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
+  '@fontsource/open-sans': 4.5.13
+  '@fontsource/raleway': 4.5.11
   axios: 1.2.0
   framer-motion: 7.6.12_biqbaboplfbrettd7655fr4n2y
   immer: 9.0.16
@@ -2793,6 +2797,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fontsource/open-sans/4.5.13:
+    resolution: {integrity: sha512-/UzqP7ZFk145XAq8KG4pvFPP7UQhtreDGXgqXZjagCDreKxcrhwn/x7DYz9rPcycWkLUVApIybcoczGZiM0cRg==}
+    dev: false
+
+  /@fontsource/raleway/4.5.11:
+    resolution: {integrity: sha512-WrFuS5q3tPqNci4iDwIf7lnkHY5jrkWswy6B007W//cAB7Iiw2NuxBNxrCetYpe3efPbEoFPcoKeTPqDzoWQ3A==}
+    dev: false
 
   /@humanwhocodes/config-array/0.11.7:
     resolution: {integrity: sha512-kBbPWzN8oVMLb0hOUYXhmxggL/1cJE6ydvjDIGi9EnAGUyA7cLVKQg+d/Dsm+KZwx2czGHrCmMVLiyg8s5JPKw==}

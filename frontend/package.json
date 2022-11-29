@@ -6,6 +6,8 @@
     "@chakra-ui/react": "^2.4.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/open-sans": "^4.5.13",
+    "@fontsource/raleway": "^4.5.11",
     "axios": "^1.2.0",
     "framer-motion": "^7.6.12",
     "immer": "^9.0.16",
