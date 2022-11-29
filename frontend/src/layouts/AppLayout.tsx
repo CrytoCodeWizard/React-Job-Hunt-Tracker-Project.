@@ -4,7 +4,7 @@ type AppLayoutProps = BoxProps;
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   return (
-    <Box h="100vh" background={"gray.100"}>
+    <Box h="100vh" background={"gray.100"} overflow="auto">
       {children}
     </Box>
   );
