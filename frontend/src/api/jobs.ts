@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Jobs } from "../components/Job/interfaces/job";
+import { Jobs } from "../components/Job/interfaces/jobs";
 import { getJwtTokenFromLocalStorage } from "../utilities/auth";
 
 import { settings } from "./config";
