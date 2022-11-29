@@ -13,3 +13,9 @@ export interface UserRegisterResponse extends UserLogin {
   method: string;
 }
 export type UserLoginResponse = UserRegisterResponse;
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+}
