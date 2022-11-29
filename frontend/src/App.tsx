@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 
-import Register from "./pages/auth/Register";
 import AppLayout from "./layouts/AppLayout";
 import useAppStore from "./store/store";
 import React, { Suspense, useEffect } from "react";
@@ -11,6 +10,8 @@ import { verifyUser } from "./utilities/auth";
 
 const App = () => {
   const Login = React.lazy(() => import("./pages/auth/Login"));
+  const Register = React.lazy(() => import("./pages/auth/Register"));
+
   const appStore = useAppStore((state) => state);
   const token = appStore.user.token;
 
@@ -58,7 +59,22 @@ const App = () => {
             </Suspense>
           }
         />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={
+            <Suspense fallback={<FullScreenSpinner />}>
+              <Register />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<FullScreenSpinner />}>
+              <Register />
+            </Suspense>
+          }
+        />
       </Routes>
     </AppLayout>
   );
