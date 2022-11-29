@@ -17,11 +17,18 @@ const AuthInfo = ({ method }: AuthInfoProps) => {
   return (
     <>
       <Heading
+        color="blue.600"
         as="h1"
+        textAlign={["left", "center"]}
+        fontSize={["2rem", "3rem"]}
+      >
+        Job Hunt Tracker
+      </Heading>
+
+      <Heading
+        as="h2"
         size={useBreakpointValue({ base: "md", sm: "lg" })}
-        sx={{
-          textAlign: ["left", "center"],
-        }}
+        textAlign={["left", "center"]}
       >
         {method === "Log in"
           ? `${method} to your account`

@@ -46,8 +46,9 @@ const Job = ({ job, index, editState }: JobProps) => {
 
   return (
     <Flex
+      whiteSpace="nowrap"
       shadow="md"
-      position={"relative"}
+      position="relative"
       borderRadius="xl"
       alignItems="center"
       justifyContent={["left", "center"]}
@@ -55,7 +56,7 @@ const Job = ({ job, index, editState }: JobProps) => {
       px={["4.5em", "1.5em"]}
       py={["2em", "2em"]}
     >
-      <Flex whiteSpace="nowrap" direction={"column"}>
+      <Flex overflow="auto" direction="column">
         <HStack>
           <Text fontWeight="bold">Company:</Text>
           <Text> {toTitle(job.company)}</Text>
@@ -85,7 +86,7 @@ const Job = ({ job, index, editState }: JobProps) => {
         p={1}
         top={0}
         right={0}
-        position={"absolute"}
+        position="absolute"
         onClick={() => deleteJob(job._id)}
         color="red.500"
         _hover={{
@@ -97,10 +98,10 @@ const Job = ({ job, index, editState }: JobProps) => {
       </Box>
 
       {!isEditing && (
-        <Box px={2} top={0} left={0} position={"absolute"} color="black.500">
+        <Box px={2} top={0} left={0} position="absolute" color="black.500">
           <Flex alignItems="center">
             <AiOutlineNumber />
-            <Text fontSize={"0.9rem"} fontWeight={"medium"}>{`${index}`}</Text>
+            <Text fontSize="0.9rem" fontWeight="medium">{`${index}`}</Text>
           </Flex>
         </Box>
       )}
@@ -109,7 +110,7 @@ const Job = ({ job, index, editState }: JobProps) => {
           p={1}
           top={0}
           right={6}
-          position={"absolute"}
+          position="absolute"
           onClick={() => {
             displayEditingToast();
             setIsEditing(true);

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Heading,
   HStack,
   Input,
   Menu,
@@ -182,7 +183,16 @@ const Home = () => {
 
   return (
     <Box>
-      <HStack p={10} pt={16} alignContent="center" justifyContent="center">
+      <Heading
+        color="blue.600"
+        as="h1"
+        mt={4}
+        textAlign={["center"]}
+        fontSize={["2rem", "3rem"]}
+      >
+        Job Hunt Tracker
+      </Heading>
+      <HStack p={10} alignContent="center" justifyContent="center">
         <Box display={["block", "flex"]}>
           <Input
             value={company}
@@ -275,7 +285,6 @@ const Home = () => {
           </Button>
         )}
       </HStack>
-
       <Box>
         <JobList
           editState={[inEditMode, setInEditMode, setJobId]}
