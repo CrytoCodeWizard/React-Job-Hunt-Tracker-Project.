@@ -4,13 +4,20 @@ import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 
+import { extendTheme } from "@chakra-ui/react";
+
+const theme = extendTheme({
+  fonts: {
+    body: `'Raleway', sans-serif`,
+  },
+});
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
