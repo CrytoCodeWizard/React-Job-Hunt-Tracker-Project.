@@ -1,6 +1,8 @@
 import create from "zustand";
 import produce from "immer";
 
+import { JobsAPIResponse } from "../api/interfaces/jobs";
+
 interface AppState {
   user: {
     id: string;
@@ -9,6 +11,8 @@ interface AppState {
     isVerified: boolean;
     token: string;
   };
+
+  jobs: JobsAPIResponse[];
 
   authMethod: string;
 
@@ -19,11 +23,16 @@ interface AppState {
   setToken: (value: string) => void;
 
   setAuthMethod: (value: string) => void;
+
+  setJobs: (value: JobsAPIResponse[] | JobsAPIResponse) => void;
+  deleteJob: (id: string) => void;
+  deleteAllJobs: () => void;
 }
 
 const useAppStore = create<AppState>()((set) => ({
   user: { token: "", name: "", id: "", isVerified: false },
   authMethod: "",
+  jobs: [],
 
   setToken: (value) =>
     set(
@@ -51,10 +60,35 @@ const useAppStore = create<AppState>()((set) => ({
         state.user.id = value;
       })
     ),
+
   setAuthMethod: (value) =>
     set(
       produce((state) => {
         state.authMethod = value;
+      })
+    ),
+
+  setJobs: (value) =>
+    set(
+      produce((state) => {
+        if (Array.isArray(value)) state.jobs = value;
+        else state.jobs.push(value);
+      })
+    ),
+
+  deleteJob: (id: string) =>
+    set(
+      produce((state) => {
+        state.jobs = state.jobs.filter(
+          (item: JobsAPIResponse) => item._id !== id
+        );
+      })
+    ),
+
+  deleteAllJobs: () =>
+    set(
+      produce((state) => {
+        state.jobs = [];
       })
     ),
 }));
