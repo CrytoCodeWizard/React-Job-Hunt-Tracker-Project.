@@ -18,11 +18,10 @@ A full-stack app to track and manage your job applications.
 
 <p align="center"> Website: https://job-hunt-tracker.netlify.app/</p>
 <p align="center">
-  <img alt="Register" src="https://user-images.githubusercontent.com/52018183/204653395-ae8c6e7f-128f-49ae-8947-e9b7350d0895.png" width="45%">
+  <img alt="Register" src="https://user-images.githubusercontent.com/52018183/204803302-9af71bd4-bf31-46f3-92e2-9baba1ef6cf4.png" width="47%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Home" src="https://user-images.githubusercontent.com/52018183/204653393-86f92ca8-6f50-46ac-b622-a717dbbb2ec8.png" width="45%">
+  <img alt="Home" src="https://user-images.githubusercontent.com/52018183/204803309-3ad0ac37-fe59-4730-8f6d-ff0b0986b75b.png" width="47%">
 </p>
-
 
 
 
