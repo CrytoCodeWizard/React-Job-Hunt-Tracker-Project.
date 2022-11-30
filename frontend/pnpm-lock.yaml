@@ -6,6 +6,7 @@ specifiers:
   '@emotion/styled': ^11.10.5
   '@fontsource/open-sans': ^4.5.13
   '@fontsource/raleway': ^4.5.11
+  '@formkit/auto-animate': 1.0.0-beta.5
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^13.5.0
@@ -38,6 +39,7 @@ dependencies:
   '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
   '@fontsource/open-sans': 4.5.13
   '@fontsource/raleway': 4.5.11
+  '@formkit/auto-animate': 1.0.0-beta.5
   axios: 1.2.0
   framer-motion: 7.6.12_biqbaboplfbrettd7655fr4n2y
   immer: 9.0.16
@@ -2804,6 +2806,10 @@ packages:
 
   /@fontsource/raleway/4.5.11:
     resolution: {integrity: sha512-WrFuS5q3tPqNci4iDwIf7lnkHY5jrkWswy6B007W//cAB7Iiw2NuxBNxrCetYpe3efPbEoFPcoKeTPqDzoWQ3A==}
+    dev: false
+
+  /@formkit/auto-animate/1.0.0-beta.5:
+    resolution: {integrity: sha512-WoSwyhAZPOe6RB/IgicOtCHtrWwEpfKIZ/H/nxpKfnZL9CB6hhhBGU5bCdMRw7YpAUF2CDlQa+WWh+gCqz5lDg==}
     dev: false
 
   /@humanwhocodes/config-array/0.11.7:
