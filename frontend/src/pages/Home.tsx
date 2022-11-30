@@ -28,6 +28,7 @@ const Home = () => {
 
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
+
   const [status, setStatus] = useState<JobStatus>(JobStatus.PENDING);
 
   const [jobId, setJobId] = useState("");
@@ -71,7 +72,7 @@ const Home = () => {
             ? `Welcome back ${name}`
             : `Welcome to your Job Hunt Tracker, ${name}`,
         status: "success",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     }
@@ -127,7 +128,7 @@ const Home = () => {
             title: "Error",
             description: errorMessage,
             status: "error",
-            duration: 5000,
+            duration: 3000,
             isClosable: true,
           });
         }
@@ -165,7 +166,7 @@ const Home = () => {
             title: "Error",
             description: errorMessage,
             status: "error",
-            duration: 5000,
+            duration: 3000,
             isClosable: true,
           });
         }
@@ -183,15 +184,34 @@ const Home = () => {
 
   return (
     <Box>
-      <Heading
-        color="blue.600"
-        as="h1"
-        mt={4}
-        textAlign={["center"]}
-        fontSize={["2rem", "3rem"]}
-      >
-        Job Hunt Tracker
-      </Heading>
+      <HStack px={10} alignItems="center" justifyContent={["unset", "center"]}>
+        <Heading
+          color="blue.600"
+          as="h1"
+          textAlign="center"
+          fontSize={["2rem", "2rem", "3rem"]}
+          mr={["auto", 0]}
+        >
+          Job Hunt Tracker
+        </Heading>
+
+        <Button
+          px="1.3em"
+          size="sm"
+          top={2}
+          right={[2]}
+          position={["unset", "absolute"]}
+          onClick={() => {
+            localStorage.clear();
+            appStore.setToken("");
+            window.location.reload();
+          }}
+          bg="gray.300"
+        >
+          Log out
+        </Button>
+      </HStack>
+
       <HStack p={10} alignContent="center" justifyContent="center">
         <Box display={["block", "flex"]}>
           <Input
@@ -200,7 +220,7 @@ const Home = () => {
             bg="white"
             onChange={(event) => setCompany(event.target.value)}
             placeholder="Company"
-            size={["xs", "sm"]}
+            size="sm"
           />
           <Input
             value={jobTitle}
@@ -210,17 +230,24 @@ const Home = () => {
             bg="white"
             onChange={(event) => setJobTitle(event.target.value)}
             placeholder="Job Title"
-            size={["xs", "sm"]}
+            size="sm"
           />
         </Box>
         {inEditMode ? (
           <>
-            <HStack alignContent={["center"]} justifyContent="flex-end">
+            <HStack
+              flexDirection={["column", "row"]}
+              alignContent="center"
+              justifyContent="flex-end"
+            >
               <Menu>
                 <MenuButton
-                  bg={"gray.300"}
+                  ml={[2, 0]}
+                  mb={[1, 0]}
+                  w={["full", "initial"]}
+                  bg={"orange.300"}
                   px={4}
-                  size={["xs", "sm"]}
+                  size={["sm"]}
                   as={Button}
                   rightIcon={<FaArrowDown />}
                 >
@@ -235,6 +262,7 @@ const Home = () => {
                 </MenuList>
               </Menu>
               <Button
+                w={["full", "initial"]}
                 px={4}
                 bg="blue.300"
                 _hover={{
@@ -246,32 +274,35 @@ const Home = () => {
                   toast.closeAll();
                   editJob();
                 }}
-                size={["xs", "sm"]}
+                size="sm"
               >
                 Edit
               </Button>
-              <Button
-                px={4}
-                bg="red.300"
-                _hover={{
-                  background: "red.200",
-                }}
-                variant="solid"
-                type="submit"
-                onClick={() => {
-                  toast.closeAll();
-                  setInEditMode(false);
-                  isEditDone(true);
-                }}
-                size={["xs", "sm"]}
-              >
-                Cancel
-              </Button>
+              <Box w={["full", "unset"]}>
+                <Button
+                  w={["full", "initial"]}
+                  px={4}
+                  mt={[1, 0]}
+                  bg="red.300"
+                  _hover={{
+                    background: "red.200",
+                  }}
+                  variant="solid"
+                  type="submit"
+                  onClick={() => {
+                    toast.closeAll();
+                    setInEditMode(false);
+                    isEditDone(true);
+                  }}
+                  size="sm"
+                >
+                  Cancel
+                </Button>
+              </Box>
             </HStack>
           </>
         ) : (
           <Button
-            px={4}
             bg="blue.300"
             _hover={{
               background: "blue.200",
@@ -279,7 +310,7 @@ const Home = () => {
             variant="solid"
             type="submit"
             onClick={createJob}
-            size={["xs", "sm"]}
+            size="sm"
           >
             Create
           </Button>
