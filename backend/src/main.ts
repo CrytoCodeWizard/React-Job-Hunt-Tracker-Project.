@@ -16,26 +16,27 @@ import { authMiddleware } from "./middleware/auth-handler";
 const run = async () => {
   try {
     await connectToDB();
-
     console.log("Connected to the database.");
 
     const app = express();
 
-    app.set("trust proxy", 1);
-    app.disable("x-powered-by");
+    if (process.env.NODE_ENV === "production") {
+      app.set("trust proxy", 1);
+      app.disable("x-powered-by");
+      app.use(
+        "/api",
+        rateLimit({
+          windowMs: 15 * 60 * 1000, // 15 minutes
+          max: 100,
+          standardHeaders: true,
+          legacyHeaders: false,
+        })
+      );
+      app.use(helmet());
+    }
 
-    app.use(
-      "/api",
-      rateLimit({
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100,
-        standardHeaders: true,
-        legacyHeaders: false,
-      })
-    );
     app.use(express.json());
     app.use(cors());
-    app.use(helmet());
 
     app.use("/api/v1/auth", authRouter);
     app.use("/api/v1/jobs", authMiddleware, jobsRouter);
