@@ -129,8 +129,6 @@ const Home = () => {
   }, [appStore.jobs.length]);
 
   const createJob = async () => {
-    console.log(userComment.length);
-
     try {
       const response = await JobsAPI.create({
         company,
