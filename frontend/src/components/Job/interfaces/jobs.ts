@@ -4,6 +4,7 @@ export interface Jobs {
   company: string;
   jobTitle: string;
   status?: string;
+  userComment?: string;
 }
 
 export interface IJob extends Jobs {

@@ -7,4 +7,5 @@ export interface IJob {
   status: JobStatus;
   createdBy: ObjectId;
   userName: string;
+  userComment?: string;
 }

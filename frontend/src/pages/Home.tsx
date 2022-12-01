@@ -8,6 +8,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Textarea,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -21,6 +22,8 @@ import { JobStatus } from "../components/Job/interfaces/jobs";
 import useCustomToast from "../hooks/useCustomToast";
 import { toTitle, transformErrorMessage } from "../utilities/transform-text";
 import FullScreenSpinner from "../components/FullScreenSpinner";
+import { JobsAPIResponse } from "../api/interfaces/jobs";
+import { getColorFromJobStatus } from "../utilities/styles";
 
 const Home = () => {
   const toast = useToast();
@@ -28,18 +31,19 @@ const Home = () => {
 
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
+  const [userComment, setUserComment] = useState("");
 
   const [status, setStatus] = useState<JobStatus>(JobStatus.PENDING);
 
-  const [jobId, setJobId] = useState("");
+  const [jobEdit, setJobEdit] = useState<JobsAPIResponse | null>(null);
 
   const [inEditMode, setInEditMode] = useState(false);
   const [editDone, isEditDone] = useState(false);
   const [loading, setIsLoading] = useState(true);
 
   const statusList = [
-    JobStatus.DECLINED,
     JobStatus.PENDING,
+    JobStatus.DECLINED,
     JobStatus.INTERVIEW,
   ];
 
@@ -76,13 +80,16 @@ const Home = () => {
         isClosable: true,
       });
     }
-
+    setIsLoading(true);
     getJobs();
+    setIsLoading(false);
   }, []);
 
   const resetInputs = () => {
     setCompany("");
     setJobTitle("");
+    setUserComment("");
+    setStatus(JobStatus.PENDING);
   };
 
   const getJobs = async () => {
@@ -104,15 +111,34 @@ const Home = () => {
   }, [editDone]);
 
   useEffect(() => {
+    if (jobEdit) {
+      setCompany(jobEdit.company);
+      setJobTitle(jobEdit.jobTitle);
+
+      setStatus(JobStatus.PENDING);
+      setUserComment(jobEdit.userComment ?? "");
+    } else {
+      resetInputs();
+    }
+  }, [jobEdit]);
+
+  useEffect(() => {
     if (appStore.jobs.length >= 0) {
       setIsLoading(false);
     }
   }, [appStore.jobs.length]);
 
   const createJob = async () => {
+    console.log(userComment.length);
+
     try {
-      const response = await JobsAPI.create({ company, jobTitle });
+      const response = await JobsAPI.create({
+        company,
+        jobTitle,
+        userComment,
+      });
       appStore.setJobs(response.data);
+
       resetInputs();
 
       displayCreatedToast();
@@ -137,18 +163,25 @@ const Home = () => {
   };
 
   const editJob = async () => {
+    if (jobEdit === null) return;
+
     let has_error = false;
     try {
-      const { data: currentJob } = await JobsAPI.findOne(jobId);
-      resetInputs();
+      const { data: currentJob } = await JobsAPI.findOne(jobEdit._id);
+      setJobEdit(null);
 
-      await JobsAPI.update(jobId, {
+      await JobsAPI.update(jobEdit._id, {
         company: company || currentJob.company,
         jobTitle: jobTitle || currentJob.jobTitle,
         status: status || currentJob.status,
+        userComment:
+          userComment === currentJob.userComment
+            ? currentJob.userComment
+            : userComment,
       });
 
       displayEditedToast();
+      resetInputs();
 
       const { data: allJobs } = await JobsAPI.findAll();
 
@@ -232,6 +265,16 @@ const Home = () => {
             placeholder="Job Title"
             size="sm"
           />
+          <Textarea
+            value={userComment}
+            mt={[2, 0]}
+            ml={[0, 2]}
+            borderRadius="md"
+            bg="white"
+            onChange={(event) => setUserComment(event.target.value)}
+            placeholder="Comment"
+            size="sm"
+          />
         </Box>
         {inEditMode ? (
           <>
@@ -244,8 +287,14 @@ const Home = () => {
                 <MenuButton
                   ml={[2, 0]}
                   mb={[1, 0]}
+                  _active={{
+                    background: getColorFromJobStatus(status, 400),
+                  }}
                   w={["full", "initial"]}
-                  bg={"orange.300"}
+                  bg={getColorFromJobStatus(status, 300)}
+                  _hover={{
+                    background: getColorFromJobStatus(status, 200),
+                  }}
                   px={4}
                   size={["sm"]}
                   as={Button}
@@ -293,6 +342,7 @@ const Home = () => {
                     toast.closeAll();
                     setInEditMode(false);
                     isEditDone(true);
+                    resetInputs();
                   }}
                   size="sm"
                 >
@@ -303,14 +353,19 @@ const Home = () => {
           </>
         ) : (
           <Button
+            alignSelf={"center"}
             bg="blue.300"
             _hover={{
               background: "blue.200",
             }}
             variant="solid"
             type="submit"
-            onClick={createJob}
+            onClick={() => {
+              toast.closeAll();
+              createJob();
+            }}
             size="sm"
+            px={["2em", "1em"]}
           >
             Create
           </Button>
@@ -318,7 +373,7 @@ const Home = () => {
       </HStack>
       <Box>
         <JobList
-          editState={[inEditMode, setInEditMode, setJobId]}
+          editState={[inEditMode, setInEditMode, setJobEdit]}
           jobs={appStore.jobs}
         />
       </Box>

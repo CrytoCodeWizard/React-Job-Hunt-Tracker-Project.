@@ -1,7 +1,9 @@
+import { JobStatus } from "../../components/Job/interfaces/jobs";
+
 export interface Jobs {
   company: string;
   jobTitle: string;
-  status: string;
+  status: JobStatus;
 }
 
 export interface JobsAPIResponse extends Jobs {
@@ -10,5 +12,6 @@ export interface JobsAPIResponse extends Jobs {
   userName: string;
   createdAt: string;
   updatedAt: string;
+  userComment?: string;
   __v: string;
 }

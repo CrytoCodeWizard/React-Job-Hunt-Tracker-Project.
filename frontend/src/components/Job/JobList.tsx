@@ -10,7 +10,7 @@ interface JobListProps {
   editState: [
     boolean,
     Dispatch<React.SetStateAction<boolean>>,
-    Dispatch<React.SetStateAction<string>>
+    Dispatch<React.SetStateAction<JobsAPIResponse | null>>
   ];
 }
 

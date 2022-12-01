@@ -10,6 +10,13 @@ const theme = extendTheme({
   fonts: {
     body: `'Raleway', sans-serif`,
   },
+  styles: {
+    global: {
+      html: {
+        scrollBehavior: "smooth",
+      },
+    },
+  },
 });
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

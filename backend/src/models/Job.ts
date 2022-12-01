@@ -31,6 +31,9 @@ const jobSchema = new Schema<IJob>(
       type: String,
       required: [true, "UserName is required!"],
     },
+    userComment: {
+      type: String,
+    },
   },
 
   { timestamps: true }
