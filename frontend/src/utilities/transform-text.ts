@@ -9,6 +9,6 @@ export const toTitle = (message: string) => {
   return message
     .trim()
     .split(" ")
-    .map((item) => item[0].toUpperCase() + item.slice(1))
+    .map((item) => item[0]?.toUpperCase() + item?.slice(1))
     .join(" ");
 };
