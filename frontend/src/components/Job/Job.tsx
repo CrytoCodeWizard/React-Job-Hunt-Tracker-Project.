@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import useCustomToast from "../../hooks/useCustomToast";
 import { toTitle } from "../../utilities/transform-text";
-import { AiOutlineNumber } from "react-icons/ai";
 import { getColorFromJobStatus } from "../../utilities/styles";
 
 interface JobProps {
@@ -28,12 +27,14 @@ interface JobProps {
 }
 
 const Job = ({ job, index, editState }: JobProps) => {
+  const showUpdate = job.createdAt !== job.updatedAt;
+
   const [isMobileScreen] = useMediaQuery("(max-width: 30em)");
 
   const [isEditing, setIsEditing, setEditJob] = editState;
 
-  const [displayEditDeleteButtons, setDisplayEditDeleteButtons] =
-    useState(false);
+  const [displayElements, setDisplayElements] = useState(false);
+
   const toast = useToast();
   const displayDeleteToast = useCustomToast({
     title: `Job #${index} deleted!`,
@@ -57,14 +58,14 @@ const Job = ({ job, index, editState }: JobProps) => {
       }
     }
   };
-  const hideEditDeleteButtons = !isMobileScreen && !displayEditDeleteButtons;
+  const hideElements = !isMobileScreen && !displayElements;
   return (
     <Flex
       onMouseOver={() => {
-        !isMobileScreen && setDisplayEditDeleteButtons(true);
+        !isMobileScreen && setDisplayElements(true);
       }}
       onMouseOut={() => {
-        !isMobileScreen && setDisplayEditDeleteButtons(false);
+        !isMobileScreen && setDisplayElements(false);
       }}
       border="#ceced3 medium solid"
       whiteSpace="nowrap"
@@ -73,7 +74,8 @@ const Job = ({ job, index, editState }: JobProps) => {
       alignItems="center"
       justifyContent={["left", "center"]}
       bg="white"
-      p="1.5em"
+      px="3em"
+      py="2em"
     >
       <Flex overflow="auto" direction="column">
         <HStack>
@@ -117,7 +119,7 @@ const Job = ({ job, index, editState }: JobProps) => {
         )}
       </Flex>
       <Box
-        hidden={hideEditDeleteButtons}
+        hidden={hideElements}
         p={1}
         top={0}
         right={0}
@@ -137,19 +139,12 @@ const Job = ({ job, index, editState }: JobProps) => {
       </Box>
 
       {!isEditing && (
-        <Box px={2} top={0} left={0} position="absolute" color="black.500">
-          <Flex alignItems="center">
-            <AiOutlineNumber />
-            <Text fontSize="0.9rem" fontWeight="medium">{`${index}`}</Text>
-          </Flex>
-        </Box>
-      )}
-      {!isEditing && (
         <Box
-          hidden={hideEditDeleteButtons}
+          hidden={hideElements}
           p={1}
           top={0}
-          right={6}
+          left={0}
+          borderTopLeftRadius="lg"
           position="absolute"
           onClick={() => {
             toast.closeAll();
@@ -168,6 +163,38 @@ const Job = ({ job, index, editState }: JobProps) => {
         >
           <MdEdit />
         </Box>
+      )}
+      <Text
+        fontWeight="semibold"
+        fontSize="2xs"
+        top={0.5}
+        position={"absolute"}
+      >
+        {new Date(job.createdAt).toLocaleDateString("en-us", {
+          month: "short",
+          day: "2-digit",
+          weekday: "short",
+          year: "numeric",
+        })}
+      </Text>
+      {showUpdate && (
+        <Text
+          hidden={hideElements}
+          fontSize="2xs"
+          fontWeight="semibold"
+          bottom={0.5}
+          left={[3, "inherit"]}
+          position={"absolute"}
+        >
+          {"Updated at: "}
+          {new Date(job.updatedAt).toLocaleDateString("en-us", {
+            month: "short",
+            day: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </Text>
       )}
     </Flex>
   );
