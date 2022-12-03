@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   Heading,
   HStack,
   Input,
@@ -9,6 +10,8 @@ import {
   MenuItem,
   MenuList,
   Textarea,
+  useColorMode,
+  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -25,6 +28,9 @@ import FullScreenSpinner from "../components/FullScreenSpinner";
 import { JobsAPIResponse } from "../api/interfaces/jobs";
 import { getColorFromJobStatus } from "../utilities/styles";
 
+import { FaMoon, FaSun } from "react-icons/fa";
+import { localStorageKeys } from "../api/config";
+
 const Home = () => {
   const toast = useToast();
   const appStore = useAppStore();
@@ -40,6 +46,17 @@ const Home = () => {
   const [inEditMode, setInEditMode] = useState(false);
   const [editDone, isEditDone] = useState(false);
   const [loading, setIsLoading] = useState(true);
+
+  const background = useColorModeValue("white", "gray.700");
+  const placeHolderColor = useColorModeValue("gray.700", "gray.100");
+  const titleColor = useColorModeValue("blue.600", "blue.200");
+  const logoutColor = useColorModeValue("gray.400", "gray.700");
+
+  const IconColorMode = useColorModeValue(FaMoon, FaSun);
+
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const darkMode = colorMode === "dark";
 
   const statusList = [
     JobStatus.PENDING,
@@ -215,9 +232,13 @@ const Home = () => {
 
   return (
     <Box>
-      <HStack px={10} alignItems="center" justifyContent={["unset", "center"]}>
+      <HStack
+        px={[5, 10]}
+        alignItems="center"
+        justifyContent={["unset", "center"]}
+      >
         <Heading
-          color="blue.600"
+          color={titleColor}
           as="h1"
           textAlign="center"
           fontSize={["2rem", "2rem", "3rem"]}
@@ -225,52 +246,77 @@ const Home = () => {
         >
           Job Hunt Tracker
         </Heading>
-
-        <Button
-          px="1.3em"
-          size="sm"
-          top={2}
-          right={[2]}
-          position={["unset", "absolute"]}
-          onClick={() => {
-            localStorage.clear();
-            appStore.setToken("");
-            window.location.reload();
-          }}
-          bg="gray.300"
-        >
-          Log out
-        </Button>
+        <Flex alignItems="center" justifyContent="center">
+          <Button
+            bg={logoutColor}
+            px="1.3em"
+            size="sm"
+            onClick={toggleColorMode}
+            position={["unset", "absolute"]}
+            top={2}
+            right={"6.4rem"}
+            mr={[1, 0]}
+          >
+            {<IconColorMode />}
+          </Button>
+          <Button
+            px="1.3em"
+            size="sm"
+            top={2}
+            right={[2]}
+            position={["unset", "absolute"]}
+            onClick={() => {
+              localStorage.removeItem(localStorageKeys.jwtToken);
+              appStore.setToken("");
+              window.location.reload();
+            }}
+            bg={logoutColor}
+          >
+            Log out
+          </Button>
+        </Flex>
       </HStack>
 
-      <HStack p={10} alignContent="center" justifyContent="center">
+      <HStack p={[5, 10]} alignContent="center" justifyContent="center">
         <Box display={["block", "flex"]}>
           <Input
+            focusBorderColor={placeHolderColor}
             value={company}
             borderRadius="md"
-            bg="white"
+            bg={background}
             onChange={(event) => setCompany(event.target.value)}
             placeholder="Company"
             size="sm"
+            _placeholder={{
+              color: placeHolderColor,
+            }}
           />
           <Input
+            focusBorderColor={placeHolderColor}
             value={jobTitle}
             mt={[2, 0]}
             ml={[0, 2]}
             borderRadius="md"
-            bg="white"
+            bg={background}
             onChange={(event) => setJobTitle(event.target.value)}
             placeholder="Job Title"
             size="sm"
+            _placeholder={{
+              color: placeHolderColor,
+            }}
           />
           <Textarea
+            focusBorderColor={placeHolderColor}
             value={userComment}
             mt={[2, 0]}
             ml={[0, 2]}
             borderRadius="md"
-            bg="white"
+            bg={background}
             onChange={(event) => setUserComment(event.target.value)}
             placeholder="Comment"
+            _placeholder={{
+              color: placeHolderColor,
+            }}
             size="sm"
           />
         </Box>
@@ -286,12 +332,18 @@ const Home = () => {
                   ml={[2, 0]}
                   mb={[1, 0]}
                   _active={{
-                    background: getColorFromJobStatus(status, 400),
+                    background: getColorFromJobStatus(
+                      status,
+                      darkMode ? 600 : 400
+                    ),
                   }}
                   w={["full", "initial"]}
-                  bg={getColorFromJobStatus(status, 300)}
+                  bg={getColorFromJobStatus(status, darkMode ? 500 : 400)}
                   _hover={{
-                    background: getColorFromJobStatus(status, 200),
+                    background: getColorFromJobStatus(
+                      status,
+                      darkMode ? 600 : 200
+                    ),
                   }}
                   px={4}
                   size={["sm"]}
@@ -311,9 +363,9 @@ const Home = () => {
               <Button
                 w={["full", "initial"]}
                 px={4}
-                bg="blue.300"
+                bg={darkMode ? "blue.500" : "blue.300"}
                 _hover={{
-                  background: "blue.200",
+                  background: darkMode ? "blue.600" : "blue.200",
                 }}
                 variant="solid"
                 type="submit"
@@ -330,9 +382,9 @@ const Home = () => {
                   w={["full", "initial"]}
                   px={4}
                   mt={[1, 0]}
-                  bg="red.300"
+                  bg={darkMode ? "red.500" : "red.300"}
                   _hover={{
-                    background: "red.200",
+                    background: darkMode ? "red.600" : "red.200",
                   }}
                   variant="solid"
                   type="submit"
@@ -352,9 +404,9 @@ const Home = () => {
         ) : (
           <Button
             alignSelf={"center"}
-            bg="blue.300"
+            bg={darkMode ? "blue.500" : "blue.300"}
             _hover={{
-              background: "blue.200",
+              background: darkMode ? "blue.600" : "blue.200",
             }}
             variant="solid"
             type="submit"

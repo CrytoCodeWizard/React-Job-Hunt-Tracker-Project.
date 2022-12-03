@@ -2,12 +2,7 @@ import { Container, Flex, Spinner } from "@chakra-ui/react";
 
 const FullScreenSpinner = () => {
   return (
-    <Flex
-      background={"gray.100"}
-      h="100vh"
-      justify={"center"}
-      alignItems="center"
-    >
+    <Flex h="100vh" justify={"center"} alignItems="center">
       <Container>
         <Flex justify={"center"} alignItems="center">
           <Spinner

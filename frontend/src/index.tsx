@@ -7,6 +7,15 @@ import { BrowserRouter } from "react-router-dom";
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
+  breakpoints: {
+    sm: "35em",
+    md: "48em",
+    lg: "62em",
+    xl: "80em",
+    "2xl": "96em",
+  },
+  initialColorMode: "light",
+  useSystemColorMode: false,
   fonts: {
     body: `'Raleway', sans-serif`,
   },

@@ -5,6 +5,7 @@ import {
   HStack,
   Text,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 interface AuthInfoProps {
@@ -13,11 +14,12 @@ interface AuthInfoProps {
 
 const AuthInfo = ({ method }: AuthInfoProps) => {
   const to = method === "Register" ? "/login" : "/register";
+  const titleColor = useColorModeValue("blue.600", "blue.200");
 
   return (
     <>
       <Heading
-        color="blue.600"
+        color={titleColor}
         as="h1"
         textAlign={["left", "center"]}
         fontSize={["2rem", "3rem"]}

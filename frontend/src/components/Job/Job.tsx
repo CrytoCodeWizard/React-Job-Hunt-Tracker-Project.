@@ -11,6 +11,8 @@ import {
   useToast,
   useMediaQuery,
   Stack,
+  useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import useCustomToast from "../../hooks/useCustomToast";
 import { toTitle } from "../../utilities/transform-text";
@@ -28,6 +30,8 @@ interface JobProps {
 
 const Job = ({ job, index, editState }: JobProps) => {
   const showUpdate = job.createdAt !== job.updatedAt;
+  const background = useColorModeValue("#fdfdfd", "gray.700");
+  const { colorMode } = useColorMode();
 
   const [isMobileScreen] = useMediaQuery("(max-width: 30em)");
 
@@ -73,21 +77,18 @@ const Job = ({ job, index, editState }: JobProps) => {
       borderRadius="xl"
       alignItems="center"
       justifyContent={["left", "center"]}
-      bg="white"
+      bg={background}
       px="3em"
       py="2em"
     >
       <Flex overflow="auto" direction="column">
         <HStack>
-          <Text fontWeight="bold">Company:</Text>
-          <Text> {toTitle(job.company)}</Text>
+          <Text fontWeight="semibold"> {toTitle(job.company)}</Text>
         </HStack>
         <HStack>
-          <Text fontWeight="bold">{"Job Title:"}</Text>
           <Text> {toTitle(job.jobTitle)}</Text>
         </HStack>
         <HStack>
-          <Text fontWeight="bold">Status:</Text>
           <Text
             fontWeight="semibold"
             color={getColorFromJobStatus(job.status, 500)}
@@ -97,7 +98,7 @@ const Job = ({ job, index, editState }: JobProps) => {
         </HStack>
         {job.userComment && (
           <>
-            <Text fontWeight="bold">Comment:</Text>
+            <Text fontWeight="bold"></Text>
 
             <Stack
               mt="0.1em"
@@ -132,7 +133,7 @@ const Job = ({ job, index, editState }: JobProps) => {
         color="red.500"
         _hover={{
           cursor: "pointer",
-          background: "red.50",
+          background: colorMode === "dark" ? "gray.200" : "red.50",
         }}
       >
         {!isEditing && <MdDelete />}
@@ -158,7 +159,7 @@ const Job = ({ job, index, editState }: JobProps) => {
           color="blue.500"
           _hover={{
             cursor: "pointer",
-            background: "blue.50",
+            background: colorMode === "dark" ? "gray.200" : "blue.50",
           }}
         >
           <MdEdit />

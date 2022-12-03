@@ -27,6 +27,7 @@ const AuthLayout = ({
   children,
   ...otherProps
 }: AuthLayoutProps) => {
+  const background = useColorModeValue("white", "gray.700");
   return (
     <Flex pt={["1em", 0]} alignItems={["start", "center"]} h="100%">
       <Container maxW="lg">
@@ -39,7 +40,7 @@ const AuthLayout = ({
           <Box
             py={{ base: "4", sm: "8" }}
             px={{ base: "4", sm: "10" }}
-            bg={useBreakpointValue({ base: "white" })}
+            bg={useBreakpointValue({ base: background })}
             boxShadow={{ base: "sm", sm: useColorModeValue("lg", "dark-lg") }}
             borderRadius={{ base: "xl", sm: "xl" }}
           >
