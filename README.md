@@ -1,6 +1,6 @@
 # job-hunt-tracker
 
-A full-stack app to track and manage your job applications. 
+A full-stack MERN project that allows users to register and login into their accounts to create, track, and manage their job applications.
 
 ### Frontend:
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
