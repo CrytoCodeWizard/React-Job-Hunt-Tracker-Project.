@@ -230,6 +230,13 @@ const Home = () => {
     return <FullScreenSpinner />;
   }
 
+  const deleteJobs = async () => {
+    if (window.confirm("Are you sure that you want to delete all the jobs ?")) {
+      appStore.deleteAllJobs();
+      await JobsAPI.deleteAll();
+    }
+  };
+
   return (
     <Box>
       <HStack
@@ -402,23 +409,43 @@ const Home = () => {
             </HStack>
           </>
         ) : (
-          <Button
-            alignSelf={"center"}
-            bg={darkMode ? "blue.500" : "blue.300"}
-            _hover={{
-              background: darkMode ? "blue.600" : "blue.200",
-            }}
-            variant="solid"
-            type="submit"
-            onClick={() => {
-              toast.closeAll();
-              createJob();
-            }}
-            size="sm"
-            px={["2em", "1em"]}
-          >
-            Create
-          </Button>
+          <>
+            <Button
+              alignSelf={"center"}
+              bg={darkMode ? "blue.500" : "blue.300"}
+              _hover={{
+                background: darkMode ? "blue.600" : "blue.200",
+              }}
+              variant="solid"
+              type="submit"
+              onClick={() => {
+                toast.closeAll();
+                createJob();
+              }}
+              size="sm"
+              px={["2em", "1em"]}
+            >
+              Create
+            </Button>
+            <Button
+              hidden={appStore.jobs.length <= 1}
+              alignSelf={"center"}
+              bg={darkMode ? "red.500" : "red.300"}
+              _hover={{
+                background: darkMode ? "red.600" : "red.200",
+              }}
+              variant="solid"
+              type="submit"
+              onClick={() => {
+                toast.closeAll();
+                deleteJobs();
+              }}
+              size="sm"
+              px={["2em", "1em"]}
+            >
+              Delete All
+            </Button>
+          </>
         )}
       </HStack>
       <Box>

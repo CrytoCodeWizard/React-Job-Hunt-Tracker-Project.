@@ -11,5 +11,6 @@ router.delete("/:id", jobsController.remove);
 router.patch("/:id", xssHandlerMiddleware, jobsController.patch);
 
 router.post("/", xssHandlerMiddleware, jobsController.create);
+router.delete("/", jobsController.removeAll);
 
 export default router;

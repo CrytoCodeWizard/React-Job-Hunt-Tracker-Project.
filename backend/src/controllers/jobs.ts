@@ -2,7 +2,7 @@ import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { CustomRequest } from "../interfaces/CustomRequest";
 import { Job } from "../models/Job";
-import { handleItemNotFound } from "../utilities/errors";
+import { CustomError, handleItemNotFound } from "../utilities/errors";
 
 const findAll = async (req: CustomRequest, res: Response) => {
   const jobs = await Job.find({ createdBy: req.userPayload?.userId }).sort(
@@ -50,4 +50,15 @@ const remove = async (req: CustomRequest, res: Response) => {
   res.status(StatusCodes.OK).json(job);
 };
 
-export default { findAll, findOne, remove, patch, create };
+const removeAll = async (req: CustomRequest, res: Response) => {
+  console.log(req);
+
+  const jobs = await Job.deleteMany({ createdBy: req.userPayload?.userId });
+  if (!jobs.deletedCount) {
+    throw new CustomError("Found no jobs to delete", StatusCodes.NOT_FOUND);
+  }
+
+  res.status(StatusCodes.OK).json(jobs);
+};
+
+export default { findAll, findOne, remove, patch, create, removeAll };
