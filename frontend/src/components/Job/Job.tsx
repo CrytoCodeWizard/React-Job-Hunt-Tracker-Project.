@@ -78,18 +78,21 @@ const Job = ({ job, index, editState }: JobProps) => {
       alignItems="center"
       justifyContent={["left", "center"]}
       bg={background}
-      px="3em"
-      py="2em"
+      px="4em"
+      py="3em"
     >
       <Flex overflow="auto" direction="column">
         <HStack>
-          <Text fontWeight="semibold"> {toTitle(job.company)}</Text>
+          <Text fontSize="lg" fontWeight="semibold">
+            {toTitle(job.company)}
+          </Text>
         </HStack>
         <HStack>
-          <Text> {toTitle(job.jobTitle)}</Text>
+          <Text fontSize="lg"> {toTitle(job.jobTitle)}</Text>
         </HStack>
         <HStack>
           <Text
+            fontSize="lg"
             fontWeight="semibold"
             color={getColorFromJobStatus(job.status, 500)}
           >
