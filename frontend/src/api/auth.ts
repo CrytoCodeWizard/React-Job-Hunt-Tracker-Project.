@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getJwtTokenFromLocalStorage } from "../utilities/auth";
 import { settings } from "./config";
 import {
   UserLogin,
@@ -26,15 +25,6 @@ export class AuthAPI {
       `${settings.authPath}/login`,
       data
     );
-    return response;
-  }
-
-  static async verifyJwt() {
-    const response = await myAxios.get(settings.verifyPath, {
-      headers: {
-        Authorization: getJwtTokenFromLocalStorage(),
-      },
-    });
     return response;
   }
 }
