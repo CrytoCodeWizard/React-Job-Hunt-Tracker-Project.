@@ -1,7 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AuthAPI } from "../../api/auth";
 import { localStorageKeys } from "../../api/config";
@@ -9,28 +8,20 @@ import { UserLogin } from "../../api/interfaces/auth";
 
 import AuthLayout from "../../layouts/AuthLayout";
 import useAppStore from "../../store/store";
-import { verifyUser } from "../../utilities/auth";
 import FullScreenSpinner from "../../components/FullScreenSpinner";
+import { verifyUser } from "../../utilities/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
   const toast = useToast();
-  const appStore = useAppStore();
+  const appStore = useAppStore((state) => state);
 
   useEffect(() => () => toast.closeAll(), [toast]);
 
   const userState = useAppStore((state) => state.user);
-
-  useEffect(() => {
-    if (userState.isVerified) {
-      navigate("/");
-    }
-  }, [userState.isVerified]);
 
   const onSubmit = async (data: UserLogin) => {
     try {
@@ -38,19 +29,19 @@ const Login = () => {
 
       if (response && response.data) {
         setLoading(true);
+
         localStorage.setItem(localStorageKeys.jwtToken, response.data.token);
 
         appStore.setToken(response.data.token);
         appStore.setName(response.data.user.name);
         appStore.setAuthMethod(response.data.method);
 
-        if (await verifyUser()) {
+        if (await verifyUser(response.data.token)) {
           appStore.setIsVerified(true);
         }
       }
     } catch (error) {
       appStore.setIsVerified(false);
-
       if (axios.isAxiosError(error)) {
         const errorMessage = error?.response?.data?.message;
 

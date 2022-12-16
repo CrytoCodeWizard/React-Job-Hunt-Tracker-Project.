@@ -55,7 +55,7 @@ const Job = ({ job, index, editState }: JobProps) => {
     if (window.confirm(`Are you sure that you want to delete job #${index}`)) {
       appStore.deleteJob(id);
       try {
-        await JobsAPI.delete(id);
+        await JobsAPI.delete(id, appStore.user.token);
         displayDeleteToast();
       } catch (error) {
         console.log(error);

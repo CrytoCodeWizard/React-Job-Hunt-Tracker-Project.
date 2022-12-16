@@ -51,8 +51,6 @@ const remove = async (req: CustomRequest, res: Response) => {
 };
 
 const removeAll = async (req: CustomRequest, res: Response) => {
-  console.log(req);
-
   const jobs = await Job.deleteMany({ createdBy: req.userPayload?.userId });
   if (!jobs.deletedCount) {
     throw new CustomError("Found no jobs to delete", StatusCodes.NOT_FOUND);

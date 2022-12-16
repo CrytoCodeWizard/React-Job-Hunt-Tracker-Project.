@@ -47,10 +47,11 @@ const Register = () => {
         setToken(response.data.token);
       }
 
-      if (await verifyUser()) {
+      if (await verifyUser(response.data.token)) {
         appStore.setIsVerified(true);
       }
     } catch (error) {
+      appStore.setIsVerified(false);
       if (axios.isAxiosError(error)) {
         const message = error?.response?.data?.message;
 

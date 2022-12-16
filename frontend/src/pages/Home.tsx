@@ -111,7 +111,7 @@ const Home = () => {
 
   const getJobs = async () => {
     try {
-      const response = await JobsAPI.findAll();
+      const response = await JobsAPI.findAll(appStore.user.token);
 
       appStore.setJobs(response.data);
     } catch (error) {
@@ -147,11 +147,14 @@ const Home = () => {
 
   const createJob = async () => {
     try {
-      const response = await JobsAPI.create({
-        company,
-        jobTitle,
-        userComment,
-      });
+      const response = await JobsAPI.create(
+        {
+          company,
+          jobTitle,
+          userComment,
+        },
+        appStore.user.token
+      );
       appStore.setJobs(response.data);
 
       resetInputs();
@@ -182,23 +185,30 @@ const Home = () => {
 
     let has_error = false;
     try {
-      const { data: currentJob } = await JobsAPI.findOne(jobEdit._id);
+      const { data: currentJob } = await JobsAPI.findOne(
+        jobEdit._id,
+        appStore.user.token
+      );
       setJobEdit(null);
 
-      await JobsAPI.update(jobEdit._id, {
-        company: company || currentJob.company,
-        jobTitle: jobTitle || currentJob.jobTitle,
-        status: status || currentJob.status,
-        userComment:
-          userComment === currentJob.userComment
-            ? currentJob.userComment
-            : userComment,
-      });
+      await JobsAPI.update(
+        jobEdit._id,
+        {
+          company: company || currentJob.company,
+          jobTitle: jobTitle || currentJob.jobTitle,
+          status: status || currentJob.status,
+          userComment:
+            userComment === currentJob.userComment
+              ? currentJob.userComment
+              : userComment,
+        },
+        appStore.user.token
+      );
 
       displayEditedToast();
       resetInputs();
 
-      const { data: allJobs } = await JobsAPI.findAll();
+      const { data: allJobs } = await JobsAPI.findAll(appStore.user.token);
 
       appStore.setJobs(allJobs);
     } catch (error) {
@@ -233,7 +243,7 @@ const Home = () => {
   const deleteJobs = async () => {
     if (window.confirm("Are you sure that you want to delete all the jobs ?")) {
       appStore.deleteAllJobs();
-      await JobsAPI.deleteAll();
+      await JobsAPI.deleteAll(appStore.user.token);
     }
   };
 
@@ -275,7 +285,7 @@ const Home = () => {
             onClick={() => {
               localStorage.removeItem(localStorageKeys.jwtToken);
               appStore.setToken("");
-              window.location.reload();
+              window.location.href = "login";
             }}
             bg={logoutColor}
           >

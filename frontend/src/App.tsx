@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import AppLayout from "./layouts/AppLayout";
 import useAppStore from "./store/store";
@@ -13,24 +13,33 @@ const App = () => {
   const Register = React.lazy(() => import("./pages/auth/Register"));
 
   const appStore = useAppStore((state) => state);
-  const token = appStore.user.token;
 
-  const verifyUserAsync = async () => {
-    if (await verifyUser()) {
-      appStore.setIsVerified(true);
-    } else {
-      appStore.setIsVerified(false);
-    }
-  };
+  const navigate = useNavigate();
+
+  const userState = useAppStore((state) => state.user);
 
   useEffect(() => {
-    if (!token) {
-      const token = localStorage.getItem(localStorageKeys.jwtToken) ?? "";
-      appStore.setToken(token);
+    if (userState.isVerified) {
+      return navigate("/");
     }
+  }, [userState.isVerified]);
 
-    verifyUserAsync();
-  }, []);
+  useEffect(() => {
+    const verify = async () => {
+      const token = localStorage.getItem(localStorageKeys.jwtToken);
+
+      if (token) {
+        if (await verifyUser(token)) {
+          appStore.setIsVerified(true);
+          appStore.setToken(token);
+        } else {
+          appStore.setIsVerified(false);
+        }
+      }
+    };
+
+    verify();
+  }, [appStore.user]);
 
   return (
     <AppLayout>
