@@ -22,7 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
     "rimraf": "^3.0.2",
-    "validator": "^13.7.0"
+    "xss": "^1.0.14"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
